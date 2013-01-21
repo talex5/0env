@@ -14,6 +14,9 @@ import cgi
 sys.path.insert(0, os.environ.pop('PYTHONPATH_0ENV'))
 from zeroinstall.injector import model
 from zeroinstall import SafeException
+from zeroinstall.injector.config import load_config
+
+config = load_config()
 
 LOGGER = logging.getLogger(__name__)
 
@@ -94,7 +97,13 @@ def parse_args(argv=None):
 	opts, args = p.parse_args(argv)
 
 	assert len(args) > 0, p.get_usage() + "\nError: too few arguments"
-	opts.feed = args[0]
+
+	app = config.app_mgr.lookup_app(args[0], missing_ok = True)
+	if app is not None:
+		opts.feed = app.get_requirements().interface_uri
+		# TODO: we should use the rest of the requirements too
+	else:
+		opts.feed = args[0]
 	opts.command = args[1:]
 	opts.feed = model.canonical_iface_uri(opts.feed)
 	opts.additional_uris = list(map(model.canonical_iface_uri, opts.additional_uris))

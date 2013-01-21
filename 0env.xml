@@ -191,7 +191,7 @@ $ source env.sh</code>
 			<requires interface="http://gfxmonk.net/dist/0install/rednose.xml"/>
 		</command>
 		<requires interface="http://0install.net/2007/interfaces/ZeroInstall.xml">
-			<version not-before="0.52"/>
+			<version not-before="1.6"/>
 			<environment insert="" mode="prepend" name="PATH"/>
 			<environment insert="" mode="replace" name="PYTHONPATH_0ENV"/>
 		</requires>

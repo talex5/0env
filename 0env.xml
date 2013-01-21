@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type='text/xsl' href='interface.xsl'?>
-<interface xmlns="http://zero-install.sourceforge.net/2004/injector/interface" uri="http://gfxmonk.net/dist/0install/0env.xml">
+<interface xmlns="http://zero-install.sourceforge.net/2004/injector/interface">
 	<name>0env</name>
 	<summary>Run a session in the context of a ZeroInstall feed</summary>
 	<homepage>https://github.com/gfxmonk/0env</homepage>
 	<publish xmlns="http://gfxmonk.net/dist/0install" mode="featured"/>
+	<feed-for interface='http://gfxmonk.net/dist/0install/0env.xml'/>
 	<description>
 0env is a utility to run a program or shell in the context of a [ZeroInstall](http://0install.net/) feed. It requires ZeroInstall itself.
 
@@ -192,18 +193,8 @@ $ source env.sh</code>
 		<requires interface="http://0install.net/2007/interfaces/ZeroInstall.xml">
 			<version not-before="0.52"/>
 			<environment insert="" mode="prepend" name="PATH"/>
+			<environment insert="" mode="replace" name="PYTHONPATH_0ENV"/>
 		</requires>
-		<implementation id="sha1new=34a70893574f748f6d1367c9abaaf5d84196a45a" released="2012-12-28" version="0.9.1">
-			<manifest-digest sha256="b5e8c73fa88b3cd61abe4ebff3e2a71ff5ce171dd94f849c9b6841534fee6993"/>
-			<archive href="http://gfxmonk.net/dist/0install/0env/0env-0.9.1.tgz" size="5980"/>
-		</implementation>
-		<implementation id="sha1new=a5d8fd283c6a45a47e7553d7bed5db7030550d11" released="2012-12-31" version="0.9.2">
-			<manifest-digest sha256="e919bd8f2ad59e809ef0d00aae7186849a78f9c7522f95f94bc649c251044d20"/>
-			<archive href="http://gfxmonk.net/dist/0install/0env/0env-0.9.2.tgz" size="5987"/>
-		</implementation>
-		<implementation id="sha1new=add01a16c4827a1a0174ff873aa9f8531558293a" released="2013-01-03" version="0.9.3">
-			<manifest-digest sha256="634ee1d1b8724aadb0fb1a8b998c571b4bed9f70a0492552279eeb645d24741f"/>
-			<archive href="http://gfxmonk.net/dist/0install/0env/0env-0.9.3.tgz" size="6753"/>
-		</implementation>
+		<implementation id="." version="0.9.3-post"/>
 	</group>
 </interface>

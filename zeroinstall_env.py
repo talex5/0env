@@ -11,6 +11,10 @@ import tempfile
 import shutil
 import cgi
 
+sys.path.insert(0, os.environ.pop('PYTHONPATH_0ENV'))
+from zeroinstall.injector import model
+from zeroinstall import SafeException
+
 LOGGER = logging.getLogger(__name__)
 
 def parse_args(argv=None):
@@ -92,8 +96,8 @@ def parse_args(argv=None):
 	assert len(args) > 0, p.get_usage() + "\nError: too few arguments"
 	opts.feed = args[0]
 	opts.command = args[1:]
-	opts.feed = expand_relative_uri(opts.feed)
-	opts.additional_uris = list(map(expand_relative_uri, opts.additional_uris))
+	opts.feed = model.canonical_iface_uri(opts.feed)
+	opts.additional_uris = list(map(model.canonical_iface_uri, opts.additional_uris))
 	opts.uris = [opts.feed] + opts.additional_uris
 	if opts.export:
 		assert len(opts.command) == 0, "Don't specify a command when using --export"
@@ -336,11 +340,6 @@ def parse_binding(b):
 	else:
 		return ("", b)
 
-def expand_relative_uri(uri):
-	if "://" in uri:
-		return uri
-	return os.path.abspath(uri)
-
 def get_short_feed_name(s):
 	'''
 	>>> get_short_feed_name("foo.xml")
@@ -579,7 +578,7 @@ Shell.CMD = Shell(["cmd", "cmd.exe", "command.com"], cmd_prompt)
 if __name__ == '__main__':
 	try:
 		sys.exit(main())
-	except AssertionError as e:
+	except (SafeException, AssertionError) as e:
 		print(e, file=sys.stderr)
 		sys.exit(1)
 
